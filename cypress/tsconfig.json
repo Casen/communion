@@ -1,8 +1,11 @@
 {
-  "exclude": [],
+  "exclude": [
+    "../node_modules/@types/jest",
+    "../node_modules/@testing-library/jest-dom"
+  ],
   "include": [
-    "./index.ts",
-    "**/*.ts",
+    "e2e/**/*",
+    "support/**/*",
     "../node_modules/cypress",
     "../node_modules/@testing-library/cypress"
   ],
@@ -11,7 +14,7 @@
     "noEmit": true,
     "types": ["node", "cypress", "@testing-library/cypress"],
     "esModuleInterop": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "moduleResolution": "node",
     "target": "es2019",
     "strict": true,

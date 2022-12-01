@@ -22,13 +22,15 @@ export async function createNote({
   body,
   userId,
 }: Pick<Note, "body" | "title"> & { userId: User["id"] }) {
-  const { data, error } = await supabase
+  const resp = await supabase
     .from("notes")
     .insert([{ title, body, profile_id: userId }])
+    .select()
     .single();
 
-  if (!error) {
-    return data;
+    console.log('created a note: ', resp)
+  if (!resp.error) {
+    return resp.data;
   }
 
   return null;
@@ -40,7 +42,7 @@ export async function deleteNote({
 }: Pick<Note, "id"> & { userId: User["id"] }) {
   const { error } = await supabase
     .from("notes")
-    .delete({ returning: "minimal" })
+    .delete()
     .match({ id, profile_id: userId });
 
   if (!error) {

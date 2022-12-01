@@ -1,4 +1,3 @@
-import bcrypt from "bcryptjs";
 import { createClient } from "@supabase/supabase-js";
 import invariant from "tiny-invariant";
 
@@ -20,7 +19,7 @@ invariant(
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export async function createUser(email: string, password: string) {
-  const { user } = await supabase.auth.signUp({
+  const { data: {user} } = await supabase.auth.signUp({
     email,
     password,
   });
@@ -54,7 +53,7 @@ export async function getProfileByEmail(email?: string) {
 }
 
 export async function verifyLogin(email: string, password: string) {
-  const { user, error } = await supabase.auth.signIn({
+  const { data: {user}, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });

@@ -19,8 +19,8 @@ export const action: ActionFunction = async ({ request }) => {
     return json({ errors: { body: "Body is required" } }, { status: 400 });
   }
 
-  const note = await createNote({ title, body, userId });
-  return redirect(`/notes/${note.id}`);
+  await createNote({ title, body, userId });
+  return redirect(`/notes`);
 };
 
 export default function NewNotePage() {
