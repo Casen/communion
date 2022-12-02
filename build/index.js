@@ -79,7 +79,7 @@ __export(root_exports, {
 var import_node3 = require("@remix-run/node"), import_react2 = require("@remix-run/react");
 
 // app/styles/tailwind.css
-var tailwind_default = "/build/_assets/tailwind-O4MY2HMB.css";
+var tailwind_default = "/build/_assets/tailwind-JGGSEDOM.css";
 
 // app/session.server.ts
 var import_node2 = require("@remix-run/node"), import_tiny_invariant2 = __toESM(require("tiny-invariant"));
@@ -406,31 +406,13 @@ function BirthChart() {
 // app/routes/city-search.tsx
 var city_search_exports = {};
 __export(city_search_exports, {
-  default: () => Index,
-  links: () => links2
+  default: () => CitySearch
 });
-var import_react4 = require("@remix-run/react"), import_react5 = require("react"), import_lodash = __toESM(require("lodash.debounce")), import_combobox = require("@reach/combobox");
-
-// node_modules/@reach/combobox/styles.css
-var styles_default = "/build/_assets/styles-TX6N3PVS.css";
-
-// app/routes/city-search.tsx
-var import_jsx_dev_runtime = require("react/jsx-dev-runtime");
-function links2() {
-  return [
-    {
-      rel: "stylesheet",
-      href: styles_default
-    }
-  ];
-}
-function Index() {
-  let cities = (0, import_react4.useFetcher)();
-  console.log("got cities: ", cities);
-  let search = (event) => {
-    cities.submit(event.target.form);
-  }, selectCity = (city) => {
-    console.log(city);
+var import_react4 = require("@remix-run/react"), import_react5 = require("react"), import_lodash = __toESM(require("lodash.debounce")), import_react6 = require("react"), import_react7 = require("@headlessui/react"), import_solid = require("@heroicons/react/20/solid"), import_jsx_dev_runtime = require("react/jsx-dev-runtime");
+function CitySearch() {
+  var _a;
+  let [selected, selectCity] = (0, import_react6.useState)(), [query, setQuery] = (0, import_react6.useState)(""), cities = (0, import_react4.useFetcher)(), search = (event) => {
+    console.log("searching cities"), cities.submit(event.target.form);
   }, debouncedSearch = (0, import_react5.useMemo)(
     () => (0, import_lodash.default)(search, 300),
     []
@@ -438,94 +420,147 @@ function Index() {
   return (0, import_react5.useEffect)(() => () => {
     debouncedSearch.cancel();
   }), /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-    style: { fontFamily: "system-ui, sans-serif", lineHeight: "1.4" },
-    children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("h1", {
-        children: "Welcome to Remix"
-      }, void 0, !1, {
-        fileName: "app/routes/city-search.tsx",
-        lineNumber: 48,
-        columnNumber: 7
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(cities.Form, {
-        method: "get",
-        action: "/api/cities",
-        autoComplete: "off",
-        role: "presentation",
-        children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_combobox.Combobox, {
-          "aria-label": "Cities",
+    className: "fixed top-16 w-72",
+    children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(cities.Form, {
+      method: "get",
+      action: "/api/cities",
+      autoComplete: "off",
+      role: "presentation",
+      children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react7.Combobox, {
+        value: selected,
+        onChange: selectCity,
+        children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+          className: "relative mt-1",
           children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+              className: "relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm",
               children: [
-                /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_combobox.ComboboxInput, {
+                /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react7.Combobox.Input, {
                   name: "q",
+                  placeholder: "Los Angeles",
+                  className: "w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0",
+                  displayValue: (city) => city ? `${city == null ? void 0 : city.name}, ${city == null ? void 0 : city.regionCode}, ${city == null ? void 0 : city.countryCode}` : "",
                   onChange: debouncedSearch
                 }, void 0, !1, {
                   fileName: "app/routes/city-search.tsx",
-                  lineNumber: 52,
-                  columnNumber: 11
+                  lineNumber: 47,
+                  columnNumber: 13
                 }, this),
-                cities.state === "submitting" ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", {
-                  children: "loading.."
+                /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react7.Combobox.Button, {
+                  className: "absolute inset-y-0 right-0 flex items-center pr-2",
+                  children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_solid.MagnifyingGlassIcon, {
+                    className: "h-5 w-5 text-gray-400",
+                    "aria-hidden": "true"
+                  }, void 0, !1, {
+                    fileName: "app/routes/city-search.tsx",
+                    lineNumber: 55,
+                    columnNumber: 15
+                  }, this)
                 }, void 0, !1, {
                   fileName: "app/routes/city-search.tsx",
-                  lineNumber: 57,
+                  lineNumber: 54,
                   columnNumber: 13
-                }, this) : null
+                }, this)
               ]
             }, void 0, !0, {
               fileName: "app/routes/city-search.tsx",
-              lineNumber: 51,
-              columnNumber: 9
+              lineNumber: 46,
+              columnNumber: 11
             }, this),
-            cities.data ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_combobox.ComboboxPopover, {
-              className: "shadow-popup",
-              children: cities.data.error ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", {
-                children: "Failed to load cities :("
-              }, void 0, !1, {
+            /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react7.Transition, {
+              as: import_react6.Fragment,
+              leave: "transition ease-in duration-100",
+              leaveFrom: "opacity-100",
+              leaveTo: "opacity-0",
+              afterLeave: () => setQuery(""),
+              children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react7.Combobox.Options, {
+                className: "absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm",
+                children: [
+                  (!cities.data || ((_a = cities.data) == null ? void 0 : _a.length) === 0) && query !== "" ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                    className: "relative cursor-default select-none py-2 px-4 text-gray-700",
+                    children: "Nothing found."
+                  }, void 0, !1, {
+                    fileName: "app/routes/city-search.tsx",
+                    lineNumber: 70,
+                    columnNumber: 17
+                  }, this) : null,
+                  cities.state === "submitting" ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
+                    className: "relative cursor-default select-none py-2 px-4 text-gray-700",
+                    children: "Loading..."
+                  }, void 0, !1, {
+                    fileName: "app/routes/city-search.tsx",
+                    lineNumber: 75,
+                    columnNumber: 17
+                  }, this) : null,
+                  (cities.data || []).map((city) => /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react7.Combobox.Option, {
+                    className: ({ active }) => `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? "bg-teal-600 text-white" : "text-gray-900"}`,
+                    value: city,
+                    children: ({ selected: selected2, active }) => /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_jsx_dev_runtime.Fragment, {
+                      children: [
+                        /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
+                          className: `block truncate ${selected2 ? "font-medium" : "font-normal"}`,
+                          children: `${city == null ? void 0 : city.name}, ${city == null ? void 0 : city.regionCode}, ${city == null ? void 0 : city.countryCode}`
+                        }, void 0, !1, {
+                          fileName: "app/routes/city-search.tsx",
+                          lineNumber: 91,
+                          columnNumber: 25
+                        }, this),
+                        selected2 ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
+                          className: `absolute inset-y-0 left-0 flex items-center pl-3 ${active ? "text-white" : "text-teal-600"}`,
+                          children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_solid.CheckIcon, {
+                            className: "h-5 w-5",
+                            "aria-hidden": "true"
+                          }, void 0, !1, {
+                            fileName: "app/routes/city-search.tsx",
+                            lineNumber: 104,
+                            columnNumber: 29
+                          }, this)
+                        }, void 0, !1, {
+                          fileName: "app/routes/city-search.tsx",
+                          lineNumber: 99,
+                          columnNumber: 27
+                        }, this) : null
+                      ]
+                    }, void 0, !0, {
+                      fileName: "app/routes/city-search.tsx",
+                      lineNumber: 90,
+                      columnNumber: 23
+                    }, this)
+                  }, city.id, !1, {
+                    fileName: "app/routes/city-search.tsx",
+                    lineNumber: 80,
+                    columnNumber: 19
+                  }, this))
+                ]
+              }, void 0, !0, {
                 fileName: "app/routes/city-search.tsx",
-                lineNumber: 64,
-                columnNumber: 15
-              }, this) : cities.data.length ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_combobox.ComboboxList, {
-                children: cities.data.map((city) => /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_combobox.ComboboxOption, {
-                  value: `${city.name}, ${city.regionCode}, ${city.countryCode}`,
-                  onClick: (event) => selectCity(city)
-                }, city.id, !1, {
-                  fileName: "app/routes/city-search.tsx",
-                  lineNumber: 68,
-                  columnNumber: 19
-                }, this))
-              }, void 0, !1, {
-                fileName: "app/routes/city-search.tsx",
-                lineNumber: 66,
-                columnNumber: 15
-              }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
-                children: "No results found"
-              }, void 0, !1, {
-                fileName: "app/routes/city-search.tsx",
-                lineNumber: 76,
-                columnNumber: 15
+                lineNumber: 68,
+                columnNumber: 13
               }, this)
             }, void 0, !1, {
               fileName: "app/routes/city-search.tsx",
-              lineNumber: 62,
+              lineNumber: 61,
               columnNumber: 11
-            }, this) : null
+            }, this)
           ]
         }, void 0, !0, {
           fileName: "app/routes/city-search.tsx",
-          lineNumber: 50,
-          columnNumber: 7
+          lineNumber: 45,
+          columnNumber: 9
         }, this)
       }, void 0, !1, {
         fileName: "app/routes/city-search.tsx",
-        lineNumber: 49,
+        lineNumber: 44,
         columnNumber: 7
       }, this)
-    ]
-  }, void 0, !0, {
+    }, void 0, !1, {
+      fileName: "app/routes/city-search.tsx",
+      lineNumber: 43,
+      columnNumber: 7
+    }, this)
+  }, void 0, !1, {
     fileName: "app/routes/city-search.tsx",
-    lineNumber: 47,
+    lineNumber: 42,
     columnNumber: 5
   }, this);
 }
@@ -592,14 +627,14 @@ async function loader5() {
 // app/routes/index.tsx
 var routes_exports = {};
 __export(routes_exports, {
-  default: () => Index2
+  default: () => Index
 });
-var import_react8 = require("@remix-run/react");
+var import_react10 = require("@remix-run/react");
 
 // app/utils.ts
-var import_react6 = require("react"), import_react7 = require("@remix-run/react");
+var import_react8 = require("react"), import_react9 = require("@remix-run/react");
 function useMatchesData(id) {
-  let matchingRoutes = (0, import_react7.useMatches)(), route = (0, import_react6.useMemo)(
+  let matchingRoutes = (0, import_react9.useMatches)(), route = (0, import_react8.useMemo)(
     () => matchingRoutes.find((route2) => route2.id === id),
     [matchingRoutes, id]
   );
@@ -627,7 +662,7 @@ function validateEmail(email) {
 
 // app/routes/index.tsx
 var import_jsx_dev_runtime = require("react/jsx-dev-runtime");
-function Index2() {
+function Index() {
   let user = useOptionalUser();
   return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("main", {
     className: "relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center",
@@ -692,7 +727,7 @@ function Index2() {
                   }, this),
                   /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                     className: "mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center",
-                    children: user ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react8.Link, {
+                    children: user ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react10.Link, {
                       to: "/notes",
                       className: "flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-violet-700 shadow-sm hover:bg-violet-50 sm:px-8",
                       children: [
@@ -706,7 +741,7 @@ function Index2() {
                     }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                       className: "space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0",
                       children: [
-                        /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react8.Link, {
+                        /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react10.Link, {
                           to: "/join",
                           className: "flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-violet-700 shadow-sm hover:bg-violet-50 sm:px-8",
                           children: "Sign up"
@@ -715,7 +750,7 @@ function Index2() {
                           lineNumber: 39,
                           columnNumber: 21
                         }, this),
-                        /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react8.Link, {
+                        /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react10.Link, {
                           to: "/login",
                           className: "flex items-center justify-center rounded-md bg-violet-500 px-4 py-3 font-medium text-white hover:bg-violet-600  ",
                           children: "Log In"
@@ -860,7 +895,7 @@ __export(login_exports, {
   loader: () => loader6,
   meta: () => meta2
 });
-var import_react9 = __toESM(require("react")), import_node7 = require("@remix-run/node"), import_react10 = require("@remix-run/react");
+var import_react11 = __toESM(require("react")), import_node7 = require("@remix-run/node"), import_react12 = require("@remix-run/react");
 var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), meta2 = () => ({
   title: "Login"
 });
@@ -894,15 +929,15 @@ var action2 = async ({ request }) => {
 };
 function Login() {
   var _a, _b, _c, _d, _e, _f;
-  let [searchParams] = (0, import_react10.useSearchParams)(), redirectTo = searchParams.get("redirectTo") ?? "/notes", actionData = (0, import_react10.useActionData)(), emailRef = import_react9.default.useRef(null), passwordRef = import_react9.default.useRef(null);
-  return import_react9.default.useEffect(() => {
+  let [searchParams] = (0, import_react12.useSearchParams)(), redirectTo = searchParams.get("redirectTo") ?? "/notes", actionData = (0, import_react12.useActionData)(), emailRef = import_react11.default.useRef(null), passwordRef = import_react11.default.useRef(null);
+  return import_react11.default.useEffect(() => {
     var _a2, _b2, _c2, _d2;
     (_a2 = actionData == null ? void 0 : actionData.errors) != null && _a2.email && ((_b2 = emailRef == null ? void 0 : emailRef.current) == null || _b2.focus()), (_c2 = actionData == null ? void 0 : actionData.errors) != null && _c2.password && ((_d2 = passwordRef == null ? void 0 : passwordRef.current) == null || _d2.focus());
   }, [actionData]), /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
     className: "flex min-h-full flex-col justify-center",
     children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
       className: "mx-auto w-full max-w-md px-8",
-      children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react10.Form, {
+      children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react12.Form, {
         method: "post",
         className: "space-y-6",
         noValidate: !0,
@@ -1067,7 +1102,7 @@ function Login() {
                 children: [
                   "Don't have an account?",
                   " ",
-                  /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react10.Link, {
+                  /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react12.Link, {
                     className: "text-blue-500 underline",
                     to: { pathname: "/join" },
                     children: "Sign up"
@@ -1112,7 +1147,7 @@ __export(notes_exports, {
   default: () => NotesPage,
   loader: () => loader7
 });
-var import_node8 = require("@remix-run/node"), import_react11 = require("@remix-run/react");
+var import_node8 = require("@remix-run/node"), import_react13 = require("@remix-run/react");
 
 // app/models/note.server.ts
 async function getNoteListItems({ userId }) {
@@ -1154,7 +1189,7 @@ async function loader7({ request }) {
   return (0, import_node8.json)({ noteListItems });
 }
 function NotesPage() {
-  let data = (0, import_react11.useLoaderData)();
+  let data = (0, import_react13.useLoaderData)();
   return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
     className: "flex h-full min-h-screen flex-col",
     children: [
@@ -1169,7 +1204,7 @@ function NotesPage() {
           /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
             className: "h-full w-80 border-r bg-gray-50",
             children: [
-              /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react11.Link, {
+              /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react13.Link, {
                 to: "new",
                 className: "block p-4 text-xl text-blue-500",
                 children: "+ New Note"
@@ -1192,7 +1227,7 @@ function NotesPage() {
                 columnNumber: 13
               }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("ol", {
                 children: data.noteListItems.map((note) => /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("li", {
-                  children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react11.NavLink, {
+                  children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react13.NavLink, {
                     className: ({ isActive }) => `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`,
                     to: note.id,
                     children: [
@@ -1222,7 +1257,7 @@ function NotesPage() {
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
             className: "flex-1 p-6",
-            children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react11.Outlet, {}, void 0, !1, {
+            children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react13.Outlet, {}, void 0, !1, {
               fileName: "app/routes/notes.tsx",
               lineNumber: 54,
               columnNumber: 11
@@ -1252,7 +1287,7 @@ function Header() {
     children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("h1", {
         className: "text-3xl font-bold",
-        children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react11.Link, {
+        children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react13.Link, {
           to: ".",
           children: "Notes"
         }, void 0, !1, {
@@ -1272,7 +1307,7 @@ function Header() {
         lineNumber: 68,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react11.Form, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react13.Form, {
         action: "/logout",
         method: "post",
         children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("button", {
@@ -1304,7 +1339,7 @@ __export(noteId_exports, {
   default: () => NoteDetailsPage,
   loader: () => loader8
 });
-var import_node9 = require("@remix-run/node"), import_react12 = require("@remix-run/react");
+var import_node9 = require("@remix-run/node"), import_react14 = require("@remix-run/react");
 var import_tiny_invariant3 = __toESM(require("tiny-invariant")), import_jsx_dev_runtime = require("react/jsx-dev-runtime");
 async function loader8({ request, params }) {
   let userId = await requireUserId(request);
@@ -1319,7 +1354,7 @@ var action3 = async ({ request, params }) => {
   return (0, import_tiny_invariant3.default)(params.noteId, "noteId not found"), await deleteNote({ userId, id: params.noteId }), (0, import_node9.redirect)("/notes");
 };
 function NoteDetailsPage() {
-  let data = (0, import_react12.useLoaderData)();
+  let data = (0, import_react14.useLoaderData)();
   return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
     children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("h3", {
@@ -1345,7 +1380,7 @@ function NoteDetailsPage() {
         lineNumber: 41,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react12.Form, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react14.Form, {
         method: "post",
         children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("button", {
           type: "submit",
@@ -1374,13 +1409,13 @@ var notes_exports2 = {};
 __export(notes_exports2, {
   default: () => NoteIndexPage
 });
-var import_react13 = require("@remix-run/react"), import_jsx_dev_runtime = require("react/jsx-dev-runtime");
+var import_react15 = require("@remix-run/react"), import_jsx_dev_runtime = require("react/jsx-dev-runtime");
 function NoteIndexPage() {
   return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", {
     children: [
       "No note selected. Select a note on the left, or",
       " ",
-      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react13.Link, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react15.Link, {
         to: "new",
         className: "text-blue-500 underline",
         children: "create a new note."
@@ -1403,13 +1438,13 @@ __export(new_exports, {
   action: () => action4,
   default: () => NewNotePage
 });
-var import_node10 = require("@remix-run/node"), import_react14 = require("@remix-run/react");
+var import_node10 = require("@remix-run/node"), import_react16 = require("@remix-run/react");
 var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), action4 = async ({ request }) => {
   let userId = await requireUserId(request), formData = await request.formData(), title = formData.get("title"), body = formData.get("body");
   return typeof title != "string" || title.length === 0 ? (0, import_node10.json)({ errors: { title: "Title is required" } }, { status: 400 }) : typeof body != "string" || body.length === 0 ? (0, import_node10.json)({ errors: { body: "Body is required" } }, { status: 400 }) : (await createNote({ title, body, userId }), (0, import_node10.redirect)("/notes"));
 };
 function NewNotePage() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react14.Form, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react16.Form, {
     method: "post",
     style: {
       display: "flex",
@@ -1511,7 +1546,7 @@ __export(join_exports, {
   loader: () => loader9,
   meta: () => meta3
 });
-var import_node11 = require("@remix-run/node"), import_react15 = require("@remix-run/react");
+var import_node11 = require("@remix-run/node"), import_react17 = require("@remix-run/react");
 var React2 = __toESM(require("react")), import_jsx_dev_runtime = require("react/jsx-dev-runtime"), meta3 = () => ({
   title: "Sign Up"
 });
@@ -1550,7 +1585,7 @@ var action5 = async ({ request }) => {
 };
 function Join() {
   var _a, _b, _c, _d, _e, _f;
-  let [searchParams] = (0, import_react15.useSearchParams)(), redirectTo = searchParams.get("redirectTo") ?? void 0, actionData = (0, import_react15.useActionData)(), emailRef = React2.useRef(null), passwordRef = React2.useRef(null);
+  let [searchParams] = (0, import_react17.useSearchParams)(), redirectTo = searchParams.get("redirectTo") ?? void 0, actionData = (0, import_react17.useActionData)(), emailRef = React2.useRef(null), passwordRef = React2.useRef(null);
   return React2.useEffect(() => {
     var _a2, _b2, _c2, _d2;
     (_a2 = actionData == null ? void 0 : actionData.errors) != null && _a2.email && ((_b2 = emailRef == null ? void 0 : emailRef.current) == null || _b2.focus()), (_c2 = actionData == null ? void 0 : actionData.errors) != null && _c2.password && ((_d2 = passwordRef == null ? void 0 : passwordRef.current) == null || _d2.focus());
@@ -1558,7 +1593,7 @@ function Join() {
     className: "flex min-h-full flex-col justify-center",
     children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
       className: "mx-auto w-full max-w-md px-8",
-      children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react15.Form, {
+      children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react17.Form, {
         className: "space-y-6",
         method: "post",
         noValidate: !0,
@@ -1694,7 +1729,7 @@ function Join() {
               children: [
                 "Already have an account?",
                 " ",
-                /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react15.Link, {
+                /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react17.Link, {
                   className: "text-blue-500 underline",
                   to: {
                     pathname: "/login",
@@ -1736,7 +1771,7 @@ function Join() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { version: "e5337db4", entry: { module: "/build/entry.client-YKUU63CG.js", imports: ["/build/_shared/chunk-BPIS255X.js", "/build/_shared/chunk-4IZGYSXB.js", "/build/_shared/chunk-5KL4PAQL.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-XHFP4VSU.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/api/cities": { id: "routes/api/cities", parentId: "root", path: "api/cities", index: void 0, caseSensitive: void 0, module: "/build/routes/api/cities-RTNMYYIW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/api/enneagram": { id: "routes/api/enneagram", parentId: "root", path: "api/enneagram", index: void 0, caseSensitive: void 0, module: "/build/routes/api/enneagram-EQ4FQNB6.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/birth-chart": { id: "routes/birth-chart", parentId: "root", path: "birth-chart", index: void 0, caseSensitive: void 0, module: "/build/routes/birth-chart-JS3RJHUC.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/city-search": { id: "routes/city-search", parentId: "root", path: "city-search", index: void 0, caseSensitive: void 0, module: "/build/routes/city-search-ZDHKLJBQ.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/healthcheck": { id: "routes/healthcheck", parentId: "root", path: "healthcheck", index: void 0, caseSensitive: void 0, module: "/build/routes/healthcheck-QB3PEZAZ.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-PMXKKELT.js", imports: ["/build/_shared/chunk-HA6LBXYV.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/join": { id: "routes/join", parentId: "root", path: "join", index: void 0, caseSensitive: void 0, module: "/build/routes/join-KXULISZG.js", imports: ["/build/_shared/chunk-M2ND3YFM.js", "/build/_shared/chunk-HA6LBXYV.js", "/build/_shared/chunk-GLWAIFE6.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-UCFS4UKX.js", imports: ["/build/_shared/chunk-M2ND3YFM.js", "/build/_shared/chunk-HA6LBXYV.js", "/build/_shared/chunk-GLWAIFE6.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logout": { id: "routes/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/logout-DOMDNNGV.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes": { id: "routes/notes", parentId: "root", path: "notes", index: void 0, caseSensitive: void 0, module: "/build/routes/notes-ADIMW252.js", imports: ["/build/_shared/chunk-E4QSSUG6.js", "/build/_shared/chunk-HA6LBXYV.js", "/build/_shared/chunk-GLWAIFE6.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes/$noteId": { id: "routes/notes/$noteId", parentId: "routes/notes", path: ":noteId", index: void 0, caseSensitive: void 0, module: "/build/routes/notes/$noteId-TFSMKHRE.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes/index": { id: "routes/notes/index", parentId: "routes/notes", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/notes/index-TQMU3WHC.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes/new": { id: "routes/notes/new", parentId: "routes/notes", path: "new", index: void 0, caseSensitive: void 0, module: "/build/routes/notes/new-GOTGO2LB.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-E5337DB4.js" };
+var assets_manifest_default = { version: "8837d664", entry: { module: "/build/entry.client-XIVYXLVX.js", imports: ["/build/_shared/chunk-4IZGYSXB.js", "/build/_shared/chunk-5KL4PAQL.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-4V2NEQZG.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/api/cities": { id: "routes/api/cities", parentId: "root", path: "api/cities", index: void 0, caseSensitive: void 0, module: "/build/routes/api/cities-RTNMYYIW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/api/enneagram": { id: "routes/api/enneagram", parentId: "root", path: "api/enneagram", index: void 0, caseSensitive: void 0, module: "/build/routes/api/enneagram-EQ4FQNB6.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/birth-chart": { id: "routes/birth-chart", parentId: "root", path: "birth-chart", index: void 0, caseSensitive: void 0, module: "/build/routes/birth-chart-JS3RJHUC.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/city-search": { id: "routes/city-search", parentId: "root", path: "city-search", index: void 0, caseSensitive: void 0, module: "/build/routes/city-search-YUSETNYS.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/healthcheck": { id: "routes/healthcheck", parentId: "root", path: "healthcheck", index: void 0, caseSensitive: void 0, module: "/build/routes/healthcheck-QB3PEZAZ.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-PMXKKELT.js", imports: ["/build/_shared/chunk-HA6LBXYV.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/join": { id: "routes/join", parentId: "root", path: "join", index: void 0, caseSensitive: void 0, module: "/build/routes/join-KXULISZG.js", imports: ["/build/_shared/chunk-M2ND3YFM.js", "/build/_shared/chunk-HA6LBXYV.js", "/build/_shared/chunk-GLWAIFE6.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-UCFS4UKX.js", imports: ["/build/_shared/chunk-M2ND3YFM.js", "/build/_shared/chunk-HA6LBXYV.js", "/build/_shared/chunk-GLWAIFE6.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logout": { id: "routes/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/logout-DOMDNNGV.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes": { id: "routes/notes", parentId: "root", path: "notes", index: void 0, caseSensitive: void 0, module: "/build/routes/notes-ADIMW252.js", imports: ["/build/_shared/chunk-E4QSSUG6.js", "/build/_shared/chunk-HA6LBXYV.js", "/build/_shared/chunk-GLWAIFE6.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes/$noteId": { id: "routes/notes/$noteId", parentId: "routes/notes", path: ":noteId", index: void 0, caseSensitive: void 0, module: "/build/routes/notes/$noteId-TFSMKHRE.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes/index": { id: "routes/notes/index", parentId: "routes/notes", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/notes/index-TQMU3WHC.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes/new": { id: "routes/notes/new", parentId: "routes/notes", path: "new", index: void 0, caseSensitive: void 0, module: "/build/routes/notes/new-GOTGO2LB.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-8837D664.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

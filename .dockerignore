@@ -1,0 +1,12 @@
+# flyctl launch added from .gitignore
+**/node_modules
+.cache
+netlify/functions/server/index.js
+public/build
+.netlify
+
+.env
+
+app/styles/tailwind.css
+
+**/cypress/videos
