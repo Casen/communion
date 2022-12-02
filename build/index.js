@@ -1576,7 +1576,10 @@ var action5 = async ({ request }) => {
       { status: 400 }
     );
   let user = await createUser(email, password);
-  return createUserSession({
+  return !user || !user.id ? (0, import_node11.json)(
+    { errors: { email: "Failed to create account" } },
+    { status: 500 }
+  ) : createUserSession({
     request,
     userId: user.id,
     remember: !1,
@@ -1609,7 +1612,7 @@ function Join() {
                     children: "Email Address"
                   }, void 0, !1, {
                     fileName: "app/routes/join.tsx",
-                    lineNumber: 106,
+                    lineNumber: 112,
                     columnNumber: 15
                   }, this),
                   ((_a = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _a.email) && /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
@@ -1618,13 +1621,13 @@ function Join() {
                     children: (_b = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _b.email
                   }, void 0, !1, {
                     fileName: "app/routes/join.tsx",
-                    lineNumber: 108,
+                    lineNumber: 114,
                     columnNumber: 17
                   }, this)
                 ]
               }, void 0, !0, {
                 fileName: "app/routes/join.tsx",
-                lineNumber: 105,
+                lineNumber: 111,
                 columnNumber: 13
               }, this),
               /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("input", {
@@ -1638,13 +1641,13 @@ function Join() {
                 ref: emailRef
               }, void 0, !1, {
                 fileName: "app/routes/join.tsx",
-                lineNumber: 113,
+                lineNumber: 119,
                 columnNumber: 13
               }, this)
             ]
           }, void 0, !0, {
             fileName: "app/routes/join.tsx",
-            lineNumber: 104,
+            lineNumber: 110,
             columnNumber: 11
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
@@ -1658,7 +1661,7 @@ function Join() {
                     children: "Password"
                   }, void 0, !1, {
                     fileName: "app/routes/join.tsx",
-                    lineNumber: 126,
+                    lineNumber: 132,
                     columnNumber: 15
                   }, this),
                   /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
@@ -1666,7 +1669,7 @@ function Join() {
                     children: "Must have at least 6 characters."
                   }, void 0, !1, {
                     fileName: "app/routes/join.tsx",
-                    lineNumber: 127,
+                    lineNumber: 133,
                     columnNumber: 15
                   }, this),
                   ((_d = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _d.password) && /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", {
@@ -1675,13 +1678,13 @@ function Join() {
                     children: (_e = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _e.password
                   }, void 0, !1, {
                     fileName: "app/routes/join.tsx",
-                    lineNumber: 131,
+                    lineNumber: 137,
                     columnNumber: 17
                   }, this)
                 ]
               }, void 0, !0, {
                 fileName: "app/routes/join.tsx",
-                lineNumber: 125,
+                lineNumber: 131,
                 columnNumber: 13
               }, this),
               /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("input", {
@@ -1695,13 +1698,13 @@ function Join() {
                 ref: passwordRef
               }, void 0, !1, {
                 fileName: "app/routes/join.tsx",
-                lineNumber: 136,
+                lineNumber: 142,
                 columnNumber: 13
               }, this)
             ]
           }, void 0, !0, {
             fileName: "app/routes/join.tsx",
-            lineNumber: 124,
+            lineNumber: 130,
             columnNumber: 11
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("button", {
@@ -1710,7 +1713,7 @@ function Join() {
             children: "Create Account"
           }, void 0, !1, {
             fileName: "app/routes/join.tsx",
-            lineNumber: 147,
+            lineNumber: 153,
             columnNumber: 11
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("input", {
@@ -1719,7 +1722,7 @@ function Join() {
             value: redirectTo
           }, void 0, !1, {
             fileName: "app/routes/join.tsx",
-            lineNumber: 153,
+            lineNumber: 159,
             columnNumber: 11
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
@@ -1738,40 +1741,40 @@ function Join() {
                   children: "Log in"
                 }, void 0, !1, {
                   fileName: "app/routes/join.tsx",
-                  lineNumber: 157,
+                  lineNumber: 163,
                   columnNumber: 15
                 }, this)
               ]
             }, void 0, !0, {
               fileName: "app/routes/join.tsx",
-              lineNumber: 155,
+              lineNumber: 161,
               columnNumber: 13
             }, this)
           }, void 0, !1, {
             fileName: "app/routes/join.tsx",
-            lineNumber: 154,
+            lineNumber: 160,
             columnNumber: 11
           }, this)
         ]
       }, void 0, !0, {
         fileName: "app/routes/join.tsx",
-        lineNumber: 103,
+        lineNumber: 109,
         columnNumber: 9
       }, this)
     }, void 0, !1, {
       fileName: "app/routes/join.tsx",
-      lineNumber: 102,
+      lineNumber: 108,
       columnNumber: 7
     }, this)
   }, void 0, !1, {
     fileName: "app/routes/join.tsx",
-    lineNumber: 101,
+    lineNumber: 107,
     columnNumber: 5
   }, this);
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { version: "8837d664", entry: { module: "/build/entry.client-XIVYXLVX.js", imports: ["/build/_shared/chunk-4IZGYSXB.js", "/build/_shared/chunk-5KL4PAQL.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-4V2NEQZG.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/api/cities": { id: "routes/api/cities", parentId: "root", path: "api/cities", index: void 0, caseSensitive: void 0, module: "/build/routes/api/cities-RTNMYYIW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/api/enneagram": { id: "routes/api/enneagram", parentId: "root", path: "api/enneagram", index: void 0, caseSensitive: void 0, module: "/build/routes/api/enneagram-EQ4FQNB6.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/birth-chart": { id: "routes/birth-chart", parentId: "root", path: "birth-chart", index: void 0, caseSensitive: void 0, module: "/build/routes/birth-chart-JS3RJHUC.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/city-search": { id: "routes/city-search", parentId: "root", path: "city-search", index: void 0, caseSensitive: void 0, module: "/build/routes/city-search-YUSETNYS.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/healthcheck": { id: "routes/healthcheck", parentId: "root", path: "healthcheck", index: void 0, caseSensitive: void 0, module: "/build/routes/healthcheck-QB3PEZAZ.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-PMXKKELT.js", imports: ["/build/_shared/chunk-HA6LBXYV.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/join": { id: "routes/join", parentId: "root", path: "join", index: void 0, caseSensitive: void 0, module: "/build/routes/join-KXULISZG.js", imports: ["/build/_shared/chunk-M2ND3YFM.js", "/build/_shared/chunk-HA6LBXYV.js", "/build/_shared/chunk-GLWAIFE6.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-UCFS4UKX.js", imports: ["/build/_shared/chunk-M2ND3YFM.js", "/build/_shared/chunk-HA6LBXYV.js", "/build/_shared/chunk-GLWAIFE6.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logout": { id: "routes/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/logout-DOMDNNGV.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes": { id: "routes/notes", parentId: "root", path: "notes", index: void 0, caseSensitive: void 0, module: "/build/routes/notes-ADIMW252.js", imports: ["/build/_shared/chunk-E4QSSUG6.js", "/build/_shared/chunk-HA6LBXYV.js", "/build/_shared/chunk-GLWAIFE6.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes/$noteId": { id: "routes/notes/$noteId", parentId: "routes/notes", path: ":noteId", index: void 0, caseSensitive: void 0, module: "/build/routes/notes/$noteId-TFSMKHRE.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes/index": { id: "routes/notes/index", parentId: "routes/notes", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/notes/index-TQMU3WHC.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes/new": { id: "routes/notes/new", parentId: "routes/notes", path: "new", index: void 0, caseSensitive: void 0, module: "/build/routes/notes/new-GOTGO2LB.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-8837D664.js" };
+var assets_manifest_default = { version: "9c6ec4d2", entry: { module: "/build/entry.client-XIVYXLVX.js", imports: ["/build/_shared/chunk-4IZGYSXB.js", "/build/_shared/chunk-5KL4PAQL.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-4V2NEQZG.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/api/cities": { id: "routes/api/cities", parentId: "root", path: "api/cities", index: void 0, caseSensitive: void 0, module: "/build/routes/api/cities-RTNMYYIW.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/api/enneagram": { id: "routes/api/enneagram", parentId: "root", path: "api/enneagram", index: void 0, caseSensitive: void 0, module: "/build/routes/api/enneagram-EQ4FQNB6.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/birth-chart": { id: "routes/birth-chart", parentId: "root", path: "birth-chart", index: void 0, caseSensitive: void 0, module: "/build/routes/birth-chart-JS3RJHUC.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/city-search": { id: "routes/city-search", parentId: "root", path: "city-search", index: void 0, caseSensitive: void 0, module: "/build/routes/city-search-YUSETNYS.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/healthcheck": { id: "routes/healthcheck", parentId: "root", path: "healthcheck", index: void 0, caseSensitive: void 0, module: "/build/routes/healthcheck-QB3PEZAZ.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-PMXKKELT.js", imports: ["/build/_shared/chunk-HA6LBXYV.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/join": { id: "routes/join", parentId: "root", path: "join", index: void 0, caseSensitive: void 0, module: "/build/routes/join-OXOGROYY.js", imports: ["/build/_shared/chunk-M2ND3YFM.js", "/build/_shared/chunk-HA6LBXYV.js", "/build/_shared/chunk-GLWAIFE6.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-UCFS4UKX.js", imports: ["/build/_shared/chunk-M2ND3YFM.js", "/build/_shared/chunk-HA6LBXYV.js", "/build/_shared/chunk-GLWAIFE6.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logout": { id: "routes/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/logout-DOMDNNGV.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes": { id: "routes/notes", parentId: "root", path: "notes", index: void 0, caseSensitive: void 0, module: "/build/routes/notes-ADIMW252.js", imports: ["/build/_shared/chunk-E4QSSUG6.js", "/build/_shared/chunk-HA6LBXYV.js", "/build/_shared/chunk-GLWAIFE6.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes/$noteId": { id: "routes/notes/$noteId", parentId: "routes/notes", path: ":noteId", index: void 0, caseSensitive: void 0, module: "/build/routes/notes/$noteId-TFSMKHRE.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes/index": { id: "routes/notes/index", parentId: "routes/notes", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/notes/index-TQMU3WHC.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes/new": { id: "routes/notes/new", parentId: "routes/notes", path: "new", index: void 0, caseSensitive: void 0, module: "/build/routes/notes/new-GOTGO2LB.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-9C6EC4D2.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

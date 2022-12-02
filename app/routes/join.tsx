@@ -70,6 +70,12 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   const user = await createUser(email, password);
+  if (!user || !user.id) {
+    return json<ActionData>(
+      { errors: { email: "Failed to create account" } },
+      { status: 500 }
+    );
+  }
 
   return createUserSession({
     request,
