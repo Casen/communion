@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import invariant from "tiny-invariant";
+import { type Database } from 'lib/database.types'
 
 export type User = { id: string; email: string };
 
@@ -16,7 +17,7 @@ invariant(
   "SUPABASE_ANON_KEY must be set in your environment variables."
 );
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
 
 export async function createUser(email: string, password: string) {
   const { data: {user} } = await supabase.auth.signUp({
