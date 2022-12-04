@@ -3,24 +3,24 @@ import { useMemo, useEffect } from "react";
 import debounce from 'lodash.debounce'
 import { Fragment, useState } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
-import { CheckIcon, ChevronUpDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import { CheckIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 
 interface City {
   id: string
-  name: string
-  regionCode: string
-  countryCode: string
+  description: string
 }
 
+interface CitySearchProps {
+  onSelect: (city: City) => void
+}
 
-export default function CitySearch() {
-  const [selected, selectCity] = useState<City>()
+export function CitySearch(props: CitySearchProps) {
+  //const [selected, selectCity] = useState<City>({id: '', description: ''})
   const [query, setQuery] = useState('')
 
   const cities = useFetcher()
 
   const search = (event: any) => {
-    console.log('searching cities')
     cities.submit(event.target.form)
   }
 
@@ -39,16 +39,16 @@ export default function CitySearch() {
 
 
   return (
-    <div className="fixed top-16 w-72">
+    <div className="">
       <cities.Form method="get" action="/api/cities" autoComplete="off" role="presentation">
-      <Combobox value={selected} onChange={selectCity}>
+      <Combobox onChange={props.onSelect}>
         <div className="relative mt-1">
-          <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+          <div className="relative w-full cursor-default overflow-hidden rounded-md bg-white text-left shadow-md  sm:text-sm focus-within:ring-4">
             <Combobox.Input
               name = "q"
               placeholder="Los Angeles"
-              className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
-              displayValue={(city: City) => city ? `${city?.name}, ${city?.regionCode}, ${city?.countryCode}` : ''}
+              className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:outline-none"
+              displayValue={(city: City) => city ? `${city.description}` : ''}
               onChange={debouncedSearch}
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -76,7 +76,12 @@ export default function CitySearch() {
                   Loading...
                 </div>
               ) : null }
-              {(cities.data || []).map((city: City) => (
+              {(cities.data && cities.data.error) ? (
+                <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
+                  Something went wrong
+                </div>
+              ) : null }
+              {cities.data ? cities.data.map((city: City) => (
                   <Combobox.Option
                     key={city.id}
                     className={({ active }) =>
@@ -93,7 +98,7 @@ export default function CitySearch() {
                             selected ? 'font-medium' : 'font-normal'
                           }`}
                         >
-                          {`${city?.name}, ${city?.regionCode}, ${city?.countryCode}`}
+                          {`${city?.description}`}
                         </span>
                         {selected ? (
                           <span
@@ -108,7 +113,7 @@ export default function CitySearch() {
                     )}
                   </Combobox.Option>
                 ))
-              }
+              : null}
             </Combobox.Options>
           </Transition>
         </div>

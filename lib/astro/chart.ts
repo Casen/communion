@@ -1,24 +1,40 @@
 import swisseph from "swisseph";
 import { type SWECALC, type SWEHOUSE, getSignDetails, planetaryBodies } from "./utils"
+import dayjs from 'dayjs'
 
-export const computeChart = () => {
-  const date = {year: 1986, month: 4, day: 8, hour: 20.2};
-  const location = {lat: 33.8807, lon: -117.8553}
+export interface ChartInput {
+  timestamp: string
+  lat: number
+  lng: number
+}
+
+export const computeChart = (input: ChartInput) => {
+  const {timestamp, lat, lng} = input
+  const timestr = timestamp.split('T')[1]
+  const [hours, minutes ] = timestr.split(':')
+  //const date = {year: 1986, month: 4, day: 8, hour: 20.2};
+  //const location = {lat: 33.8807, lon: -117.8553}
+
+  const date = dayjs(timestamp)
+  const hoursMinutes = parseInt(hours) + (parseInt(minutes)/60)
+  //TODO validation
+
   const iFlag = swisseph.SEFLG_SPEED | swisseph.SEFLG_MOSEPH | swisseph.SEFLG_SIDEREAL
 
   swisseph.swe_set_sid_mode(swisseph.SE_SIDM_LAHIRI, 0, 0);
 
-  const tjd = swisseph.swe_julday(date.year, date.month, date.day, date.hour, swisseph.SE_GREG_CAL)
+ // const tjd = swisseph.swe_julday(date.year, date.month, date.day, date.hour, swisseph.SE_GREG_CAL)
+  const tjd = swisseph.swe_julday(date.get('year'), date.get('month')+1, date.date(), hoursMinutes, swisseph.SE_GREG_CAL)
 
   const te = tjd + (swisseph.swe_deltat(tjd)).delta
-  const data = swisseph.swe_houses_ex(te, iFlag, location.lat, location.lon, "P") as SWEHOUSE
+  const data = swisseph.swe_houses_ex(te, iFlag, lat, lng, "P") as SWEHOUSE
   const ascSign = getSignDetails(Math.floor(data.ascendant / 30) + 1)
 
   const houses: {sign: number, planets: number[]}[] = []
   for (let i = 0; i < 12; i++) {
     let housePos = i + ascSign.position
     if (housePos > 12) housePos = housePos - 12
-    const sign = getSignDetails(housePos)
+    //const sign = getSignDetails(housePos)
     houses.push({sign: housePos, planets: []})
   }
 

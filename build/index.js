@@ -749,11 +749,14 @@ planetaryBodies.forEach((body, idx) => {
 
 // lib/astro/chart.ts
 var import_dayjs = __toESM(require("dayjs")), computeChart = (input) => {
-  let { timestamp, lat, lng } = input, timestr = timestamp.split("T")[1], [hours, minutes] = timestr.split(":"), date = (0, import_dayjs.default)(timestamp), hoursMinutes = parseInt(hours) + parseInt(minutes) / 60;
+  console.dir(input);
+  let { timestamp, lat, lng } = input, timestr = timestamp.split("T")[1], [hours, minutes] = timestr.split(":"), date = (0, import_dayjs.default)(timestamp);
+  console.log(`date info: ${date.get("year")}, ${date.get("month") + 1}, ${date.date()}`);
+  let hoursMinutes = parseInt(hours) + parseInt(minutes) / 60;
   console.log("hours minutes: ", hoursMinutes);
   let iFlag = import_swisseph.default.SEFLG_SPEED | import_swisseph.default.SEFLG_MOSEPH | import_swisseph.default.SEFLG_SIDEREAL;
   import_swisseph.default.swe_set_sid_mode(import_swisseph.default.SE_SIDM_LAHIRI, 0, 0);
-  let tjd = import_swisseph.default.swe_julday(date.get("year"), date.get("month"), date.get("day"), hoursMinutes, import_swisseph.default.SE_GREG_CAL);
+  let tjd = import_swisseph.default.swe_julday(date.get("year"), date.get("month") + 1, date.date(), hoursMinutes, import_swisseph.default.SE_GREG_CAL);
   console.log(tjd);
   let te = tjd + import_swisseph.default.swe_deltat(tjd).delta, data = import_swisseph.default.swe_houses_ex(te, iFlag, lat, lng, "P"), ascSign = getSignDetails(Math.floor(data.ascendant / 30) + 1), houses = [];
   for (let i = 0; i < 12; i++) {
