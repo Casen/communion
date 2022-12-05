@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "nrwl.angular-console",
+    "wix.vscode-import-cost",
+    "firsttris.vscode-jest-runner",
+    "cschleiden.vscode-github-actions"
+  ]
+}

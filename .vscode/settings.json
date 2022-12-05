@@ -1,0 +1,152 @@
+{
+  // Enables or disables all validations.
+  "css.validate": true,
+
+  // Code action kinds to be run on save.
+  "editor.codeActionsOnSave": {
+    "source.sortImports": true,
+    "source.fixAll.eslint": true
+  },
+
+  // Defines a default formatter which takes precedence over all other formatter settings. Must be the identifier of an extension contributing a formatter.
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Format a file on save. A formatter must be available, the file must not be saved after delay, and the editor must not be shutting down.
+  "editor.formatOnSave": true,
+
+  // The number of spaces a tab is equal to. This setting is overridden based on the file contents when `editor.detectIndentation` is on.
+  "editor.tabSize": 2,
+
+  // Controls whether suggestions should automatically show up while typing.
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": false // Might want to set to true for Tailwind completion
+  },
+
+  // Configure file associations to languages (e.g. `"*.extension": "html"`). These have precedence over the default associations of the languages installed.
+  "files.associations": {
+    ".*rc": "json",
+    ".npmrc": "properties",
+    ".eslintrc.json": "jsonc",
+    "nx.json": "jsonc",
+    "workspace.json": "jsonc"
+  },
+
+  // Configure glob patterns for excluding files and folders. For example, the files explorer decides which files and folders to show or hide based on this setting
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true
+  },
+
+  // Configure glob patterns for excluding files and folders in searches. Inherits all glob patterns from the `files.exclude` setting.
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "**/.hg/store/**": true,
+    "**/coverage/**": true
+  },
+
+  // Configure glob patterns of file paths to exclude from file watching. Changing this setting requires a restart.
+  "files.watcherExclude": {
+    // To exclude JavaScript files generated from both .ts and .tsx source files
+    "**/*.js": { "when": "$(basename).ts" },
+    "**/**.js": { "when": "$(basename).tsx" },
+    "**/dist/**": true, // Ignore all dist folders
+    "**/.next/**": true, // Ignore all .next folders
+    "**/coverage/**": true, // Ignore all coverage folders
+
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/.hg/store/**": true
+  },
+
+  // Upper size limit, in KB, that will count a package as a small package
+  "importCost.smallPackageSize": 50,
+
+  // Upper size limit, in KB, that will count a package as a medium package
+  "importCost.mediumPackageSize": 75,
+
+  // Decoration color for small packages
+  "importCost.smallPackageColor": "#7cc36e",
+
+  // Decoration color for medium packages
+  "importCost.mediumPackageColor": "#7cc36e",
+
+  // Decoration color for large packages
+  "importCost.largePackageColor": "#d44e40",
+
+  // File extensions to be parsed by the Typescript parser
+  "importCost.typescriptExtensions": ["\\.tsx?$"],
+
+  // File extensions to be parsed by the Javascript parser
+  "importCost.javascriptExtensions": ["\\.jsx?$"],
+
+  // Which bundle size to display
+  "importCost.bundleSizeDecoration": "both",
+
+  // Display the 'calculating' decoration
+  "importCost.showCalculatingDecoration": true,
+
+  // Print debug messages in output channel
+  "importCost.debug": false,
+
+  // Configure settings to be overridden for [javascript] language.
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": false
+    }
+  },
+
+  // Configure settings to be overridden for [javascript] language.
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": false
+    }
+  },
+
+  // Configure settings to be overridden for [typescript] language.
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": false
+    }
+  },
+
+  // Configure settings to be overridden for [typescriptreact] language.
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": false
+    }
+  },
+
+  // Force VSCode to use the local TypeScript version
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  // Spell checking ignore list
+  "cSpell.words": ["subkit"],
+
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#F9DF8B",
+    "titleBar.activeForeground": "#000000",
+    "titleBar.inactiveBackground": "#FFFBE6",
+    "titleBar.inactiveForeground": "#000000"
+  }
+}
