@@ -38,12 +38,12 @@ export const action: ActionFunction = async ({ request }) => {
     birth_place: formatted_address,
   });
 
-  const astro = calculateAstro({
-    timestamp: updatedProfile.birth_time,
-    lat: updatedProfile.birth_lat,
-    lng: updatedProfile.birth_lng,
-  });
-  return { ...updatedProfile, chart: astro };
+  //const astro = calculateAstro({
+  //  timestamp: updatedProfile.birth_time,
+  //  lat: updatedProfile.birth_lat,
+  //  lng: updatedProfile.birth_lng,
+  //});
+  return { ...updatedProfile };
   // return redirect(`/get-birth-chart/${form.get('id')}`);
 };
 

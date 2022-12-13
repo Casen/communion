@@ -1,10 +1,10 @@
 import type { ActionFunction, LoaderArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
+import invariant from "tiny-invariant";
 import type { Note } from "~/models/note.server";
 import { deleteNote, getNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
-import invariant from "tiny-invariant";
 
 type LoaderData = {
   note: Note;
@@ -20,7 +20,7 @@ export async function loader({ request, params }: LoaderArgs) {
   }
 
   return json({ note });
-};
+}
 
 export const action: ActionFunction = async ({ request, params }) => {
   const userId = await requireUserId(request);
@@ -32,7 +32,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 };
 
 export default function NoteDetailsPage() {
-  const data = useLoaderData<typeof loader>() as LoaderData;
+  const data = useLoaderData<typeof loader>();
 
   return (
     <div>
