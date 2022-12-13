@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - dev
   pull_request: {}
 
 permissions:
@@ -79,7 +78,6 @@ jobs:
 
       - name: ⚡ Run vitest
         run: npm run test -- --coverage
-
 
   build:
     name: 🐳 Build
@@ -168,3 +166,24 @@ jobs:
           args: "deploy --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+  migrate-production:
+    runs-on: ubuntu-22.04
+    needs: [deploy]
+
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.PRODUCTION_DB_PASSWORD }}
+      PRODUCTION_PROJECT_ID: lcjuhqywxtguwxuuchmj
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 1.0.0
+
+      - run: |
+          supabase link --project-ref $PRODUCTION_PROJECT_ID
+
+          supabase db push
