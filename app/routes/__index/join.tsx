@@ -1,18 +1,14 @@
-import React from "react";
-import type {
-  ActionFunction,
-  LoaderArgs,
-  MetaFunction,
-} from "@remix-run/node";
+import type { ActionFunction, LoaderArgs, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
-import { verifyLogin } from "~/models/user.server";
+import * as React from "react";
+import { createUser, getProfileByEmail } from "~/models/user.server";
 import { createUserSession, getUserId } from "~/session.server";
 import { validateEmail } from "~/utils";
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Login",
+    title: "Sign Up",
   };
 };
 
@@ -27,19 +23,23 @@ export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request);
   if (userId) return redirect("/");
   return json({});
-};
+}
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
   const redirectTo = formData.get("redirectTo");
-  const remember = formData.get("remember");
 
+  // Ensure the email is valid
   if (!validateEmail(email)) {
-    return json({ errors: { email: "Email is invalid." } }, { status: 400 });
+    return json<ActionData>(
+      { errors: { email: "Email is invalid." } },
+      { status: 400 }
+    );
   }
 
+  // What if a user sends us a password through other means than our form?
   if (typeof password !== "string") {
     return json(
       { errors: { password: "Valid password is required." } },
@@ -47,33 +47,43 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
+  // Enforce minimum password length
   if (password.length < 6) {
-    return json(
-      { errors: { password: "Password is too short" } },
+    return json<ActionData>(
+      { errors: { password: "Password is too short." } },
       { status: 400 }
     );
   }
 
-  const user = await verifyLogin(email, password);
-
-  if (!user) {
-    return json(
-      { errors: { email: "Invalid email or password" } },
+  // A user could potentially already exist within our system
+  // and we should communicate that well
+  const existingUser = await getProfileByEmail(email);
+  if (existingUser) {
+    return json<ActionData>(
+      { errors: { email: "A user already exists with this email." } },
       { status: 400 }
+    );
+  }
+
+  const user = await createUser(email, password);
+  if (!user || !user.id) {
+    return json<ActionData>(
+      { errors: { email: "Failed to create account" } },
+      { status: 500 }
     );
   }
 
   return createUserSession({
     request,
     userId: user.id,
-    remember: remember === "on" ? true : false,
-    redirectTo: typeof redirectTo === "string" ? redirectTo : "/notes",
+    remember: false,
+    redirectTo: typeof redirectTo === "string" ? redirectTo : "/",
   });
 };
 
-export default function Login() {
+export default function Join() {
   const [searchParams] = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo") ?? "/notes";
+  const redirectTo = searchParams.get("redirectTo") ?? undefined;
 
   const actionData = useActionData() as ActionData;
   const emailRef = React.useRef<HTMLInputElement>(null);
@@ -90,9 +100,9 @@ export default function Login() {
   }, [actionData]);
 
   return (
-    <div className="flex min-h-full flex-col justify-center">
+    <div className="flex min-h-full flex-col justify-center rounded bg-white py-8">
       <div className="mx-auto w-full max-w-md px-8">
-        <Form method="post" className="space-y-6" noValidate>
+        <Form className="space-y-6" method="post" noValidate>
           <div>
             <label className="text-sm font-medium" htmlFor="email">
               <span className="block text-gray-700">Email Address</span>
@@ -104,10 +114,10 @@ export default function Login() {
             </label>
             <input
               className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-              autoComplete="email"
               type="email"
               name="email"
               id="email"
+              required
               aria-invalid={actionData?.errors?.email ? true : undefined}
               aria-describedby="email-error"
               ref={emailRef}
@@ -129,42 +139,31 @@ export default function Login() {
               id="password"
               type="password"
               name="password"
-              autoComplete=""
               className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+              autoComplete="new-password"
               aria-invalid={actionData?.errors?.password ? true : undefined}
               aria-describedby="password-error"
               ref={passwordRef}
             />
           </div>
           <button
-            className="w-full rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
+            className="w-full rounded bg-violet-500  py-2 px-4 text-white hover:bg-violet-600 focus:bg-violet-400"
             type="submit"
           >
-            Log in
+            Create Account
           </button>
           <input type="hidden" name="redirectTo" value={redirectTo} />
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                id="remember"
-                name="remember"
-                type="checkbox"
-              />
-              <label
-                className="ml-2 block text-sm text-gray-900"
-                htmlFor="remember"
-              >
-                Remember me
-              </label>
-            </div>
+          <div className="flex items-center justify-center">
             <div className="text-center text-sm text-gray-500">
-              Don't have an account?{" "}
+              Already have an account?{" "}
               <Link
                 className="text-blue-500 underline"
-                to={{ pathname: "/join" }}
+                to={{
+                  pathname: "/login",
+                  search: searchParams.toString(),
+                }}
               >
-                Sign up
+                Log in
               </Link>
             </div>
           </div>
