@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
+import { SupabaseAuthClient } from "@supabase/supabase-js/dist/module/lib/SupabaseAuthClient";
+import { type Database } from "lib/database.types";
 import invariant from "tiny-invariant";
-import { type Database } from 'lib/database.types'
 
 export type User = { id: string; email: string };
 
@@ -20,17 +21,38 @@ invariant(
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
 
 export async function createUser(email: string, password: string) {
-  const { data: {user}, error } = await supabase.auth.signUp({
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.signUp({
     email,
     password,
   });
 
-  console.log(error)
+  console.log(error);
 
   // get the user profile after created
   const profile = await getProfileByEmail(user?.email);
 
   return profile;
+}
+
+export async function updateUser(
+  userId: string,
+  dto: Database["public"]["Tables"]["profiles"]["Update"]
+) {
+  const { data, error } = await supabase
+    .from("profiles")
+    .update(dto)
+    .eq("id", userId)
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
 }
 
 export async function getProfileById(id: string) {
@@ -56,7 +78,10 @@ export async function getProfileByEmail(email?: string) {
 }
 
 export async function verifyLogin(email: string, password: string) {
-  const { data: {user}, error } = await supabase.auth.signInWithPassword({
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
