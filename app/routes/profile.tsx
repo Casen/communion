@@ -1,6 +1,7 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { redirect, type LoaderArgs } from "@remix-run/node";
+import { Outlet } from "@remix-run/react";
 import { Fragment } from "react";
 import Gravatar from "react-gravatar";
 import { requireUserId } from "~/session.server";
@@ -177,11 +178,7 @@ export default function Profile() {
         </Disclosure>
         <main>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-            {/* Replace with your content */}
-            <div className="px-4 py-6 sm:px-0">
-              <div className="h-96 rounded-lg border-4 border-dashed border-gray-200" />
-            </div>
-            {/* /End replace */}
+            <Outlet />
           </div>
         </main>
       </div>

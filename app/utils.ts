@@ -1,4 +1,5 @@
 import { useMatches } from "@remix-run/react";
+import { calculateAstro } from "lib/astro";
 import { type Database } from "lib/database.types";
 import { useMemo } from "react";
 import type { User } from "./models/user.server";
@@ -27,13 +28,31 @@ export function useOptionalUser() {
 
 export function useUser() {
   const maybeUser = useOptionalUser();
-  console.log("maybe user: ", maybeUser);
   if (!maybeUser) {
     throw new Error(
       "No user found in root loader, but user is required by useUser. If user is optional, try useOptionalUser instead."
     );
   }
   return maybeUser;
+}
+
+export function useChart() {
+  const maybeUser = useOptionalUser();
+  if (!maybeUser) {
+    throw new Error(
+      "No user found in root loader, but user is required by useUser. If user is optional, try useOptionalUser instead."
+    );
+  }
+
+  if (!maybeUser.birth_time || !maybeUser.birth_lat || !maybeUser.birth_lng)
+    return null;
+
+  const astro = calculateAstro({
+    timestamp: maybeUser.birth_time,
+    lat: maybeUser.birth_lat,
+    lng: maybeUser.birth_lng,
+  });
+  return astro;
 }
 
 export function validateEmail(email: unknown): email is string {
