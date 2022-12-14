@@ -63,7 +63,7 @@ export const action: ActionFunction = async ({ request }) => {
     request,
     userId: user.id,
     remember: remember === "on" ? true : false,
-    redirectTo: typeof redirectTo === "string" ? redirectTo : "/notes",
+    redirectTo: typeof redirectTo === "string" ? redirectTo : "/profile",
   });
 };
 
@@ -86,7 +86,7 @@ export default function Login() {
   }, [actionData]);
 
   return (
-    <div className="flex min-h-full flex-col justify-center rounded bg-white py-8">
+    <div className="flex min-h-full flex-col justify-center rounded-lg bg-white py-8">
       <div className="mx-auto w-full max-w-md px-8">
         <Form method="post" className="space-y-6" noValidate>
           <div>

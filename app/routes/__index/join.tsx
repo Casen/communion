@@ -21,7 +21,7 @@ interface ActionData {
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request);
-  if (userId) return redirect("/");
+  if (userId) return redirect("/profile");
   return json({});
 }
 
@@ -77,7 +77,7 @@ export const action: ActionFunction = async ({ request }) => {
     request,
     userId: user.id,
     remember: false,
-    redirectTo: typeof redirectTo === "string" ? redirectTo : "/",
+    redirectTo: typeof redirectTo === "string" ? redirectTo : "/profile",
   });
 };
 
@@ -100,7 +100,7 @@ export default function Join() {
   }, [actionData]);
 
   return (
-    <div className="flex min-h-full flex-col justify-center rounded bg-white py-8">
+    <div className="flex min-h-full flex-col justify-center rounded-lg bg-white py-8">
       <div className="mx-auto w-full max-w-md px-8">
         <Form className="space-y-6" method="post" noValidate>
           <div>
