@@ -1,5 +1,4 @@
 import { createClient } from "@supabase/supabase-js";
-import { SupabaseAuthClient } from "@supabase/supabase-js/dist/module/lib/SupabaseAuthClient";
 import { type Database } from "lib/database.types";
 import invariant from "tiny-invariant";
 
@@ -58,18 +57,18 @@ export async function updateUser(
 export async function getProfileById(id: string) {
   const { data, error } = await supabase
     .from("profiles")
-    .select("email, id")
+    .select()
     .eq("id", id)
     .single();
 
   if (error) return null;
-  if (data) return { id: data.id, email: data.email };
+  if (data) return data;
 }
 
 export async function getProfileByEmail(email?: string) {
   const { data, error } = await supabase
     .from("profiles")
-    .select("email, id")
+    .select()
     .eq("email", email)
     .single();
 
