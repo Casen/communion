@@ -79,10 +79,19 @@ export default function FinishProfile() {
   return (
     <div className="flex min-h-full flex-col justify-center rounded-lg bg-white py-8">
       <div className="mx-auto w-full max-w-md px-8">
+        <label className="text-sm font-medium" htmlFor="city">
+          <span className="block text-gray-700">Birth City</span>
+        </label>
         <CitySearch onSelect={selectCity} />
         <Form method="post" ref={formRef}>
-          <fieldset disabled={transition.state === "submitting"}>
+          <fieldset
+            className="mt-4"
+            disabled={transition.state === "submitting"}
+          >
             <input hidden={true} value={cityId} name="id" readOnly />
+            <label className="text-sm font-medium" htmlFor="datetime">
+              <span className="block text-gray-700">Birth Time</span>
+            </label>
             <input
               name="datetime"
               className="w-full rounded-md py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 shadow focus:outline-none"
@@ -94,6 +103,7 @@ export default function FinishProfile() {
           <button
             className="my-4 w-full rounded-md bg-violet-500 py-2 px-4 font-bold text-white"
             type="submit"
+            disabled={!cityId || !selectedDate}
           >
             {transition.state === "submitting" ? "Saving..." : "Save"}
           </button>
