@@ -45,13 +45,12 @@ export const computeChart = (input: ChartInput) => {
 
   const te = tjd + swisseph.swe_deltat(tjd).delta;
   const data = swisseph.swe_houses_ex(te, iFlag, lat, lng, "P") as SWEHOUSE;
-  console.dir("swe house: ", data);
 
   //Push ascendant onto bodies array
   bodies.push({ name: "ascendant", longitude: data.ascendant });
 
   //Push planet calcs onto bodies array
-  planetaryBodies.slice(0, 7).forEach((body, idx) => {
+  planetaryBodies.slice(0, 10).forEach((body, idx) => {
     const result = swisseph.swe_calc_ut(tjd, idx, iFlag) as SWECALC;
     bodies.push({ name: body, longitude: result.longitude });
   });
@@ -87,6 +86,31 @@ export const computeChart = (input: ChartInput) => {
     };
   });
 
+  let earth = 0,
+    water = 0,
+    fire = 0,
+    air = 0;
+
+  planets.forEach((planet) => {
+    const element = planet.zodiac.element;
+    const points = ["ascendant", "sun", "moon"].includes(planet.name) ? 2 : 1;
+
+    switch (element) {
+      case "earth":
+        earth += points;
+        break;
+      case "water":
+        water += points;
+        break;
+      case "fire":
+        fire += points;
+        break;
+      case "air":
+        air += points;
+        break;
+    }
+  });
+
   //const ascSign = getSignDetails(Math.floor(data.ascendant / 30) + 1);
 
   const chart: Partial<VedicChart> = {
@@ -95,10 +119,11 @@ export const computeChart = (input: ChartInput) => {
     houses: houses.map((h) => {
       return { position: h.position, zodiac: getSignDetails(h.sign) };
     }),
+    earth,
+    water,
+    fire,
+    air,
   };
 
-  console.dir(chart.ascendant);
-  console.dir(chart.planets);
-  console.dir(chart.houses);
   return chart;
 };

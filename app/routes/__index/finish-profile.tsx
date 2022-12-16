@@ -10,7 +10,7 @@ import { getUser, requireUserId } from "~/session.server";
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Sign Up",
+    title: "Finish profile",
   };
 };
 

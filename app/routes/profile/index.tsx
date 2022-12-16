@@ -1,10 +1,29 @@
-import { Link } from "@remix-run/react";
+import { type LoaderArgs } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
+import { calculateAstro } from "lib/astro";
 import React from "react";
-import { useChart, useUser } from "~/utils";
+import { getUser } from "~/session.server";
+import { useUser } from "~/utils";
+
+export async function loader({ request }: LoaderArgs) {
+  const user = await getUser(request);
+
+  if (!user) return null;
+
+  if (!user.birth_time || !user.birth_lat || !user.birth_lng) return null;
+
+  const astro = calculateAstro({
+    timestamp: user.birth_time,
+    lat: user.birth_lat,
+    lng: user.birth_lng,
+  });
+
+  return astro;
+}
 
 export default function Index() {
   const user = useUser();
-  const chart = useChart();
+  const chart = useLoaderData<typeof loader>();
 
   return (
     <React.Fragment>

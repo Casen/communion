@@ -59,4 +59,8 @@ export interface VedicChart {
   ascendant: Planet;
   planets: Planet[];
   houses: House[];
+  earth: number;
+  water: number;
+  fire: number;
+  air: number;
 }
