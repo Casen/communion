@@ -1,4 +1,4 @@
-import { computeChart } from "./chart";
+import { computeChart } from "./chart.server";
 import { computeEnneagram } from "./enneagram";
 import { type ChartInput } from "./interface";
 
