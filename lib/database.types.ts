@@ -158,18 +158,21 @@ export interface Database {
           email: string
           created_at: string
           ip: string | null
+          name: string
         }
         Insert: {
           id: string
           email: string
           created_at?: string
           ip?: string | null
+          name?: string
         }
         Update: {
           id?: string
           email?: string
           created_at?: string
           ip?: string | null
+          name?: string
         }
       }
     }
