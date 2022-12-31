@@ -1,7 +1,7 @@
 import { type LoaderArgs } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import { calculateAstro } from "lib/astro";
 import React from "react";
+import { getPrimaryChart } from "~/models/chart.server";
 import { getUser } from "~/session.server";
 import { useUser } from "~/utils";
 
@@ -10,15 +10,11 @@ export async function loader({ request }: LoaderArgs) {
 
   if (!user) return null;
 
-  if (!user.birth_time || !user.birth_lat || !user.birth_lng) return null;
+  const { data, error } = await getPrimaryChart(user.id);
 
-  const astro = calculateAstro({
-    timestamp: user.birth_time,
-    lat: user.birth_lat,
-    lng: user.birth_lng,
-  });
+  if (!data || error) return null;
 
-  return astro;
+  return data;
 }
 
 export default function Index() {
@@ -29,11 +25,11 @@ export default function Index() {
     <React.Fragment>
       {chart ? (
         <div className="space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-1 sm:gap-5 sm:space-y-0">
+          <p>Name: {user.name}</p>
           <p>
-            Born in {user.birth_place}, at {user.birth_time}
+            Born in {chart.birth_place}, at {chart.birth_time}
           </p>
           <p>Enneagram: {chart.enneagram}</p>
-          <p>Ascendant: {chart.chart.ascendant?.zodiac?.name}</p>
         </div>
       ) : (
         <div className="space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-1 sm:gap-5 sm:space-y-0">

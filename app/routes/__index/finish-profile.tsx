@@ -4,7 +4,7 @@ import { Form, useTransition } from "@remix-run/react";
 import dayjs from "dayjs";
 import React, { useRef, useState } from "react";
 import { CitySearch } from "~/components/city-search";
-import { updateUser } from "~/models/user.server";
+import { computeAndStoreChart } from "~/models/chart.server";
 import { placeDetails } from "~/services/google";
 import { getUser, requireUserId } from "~/session.server";
 
@@ -35,19 +35,24 @@ export const action: ActionFunction = async ({ request }) => {
   );
   const timestamp = birthDateTime.toISOString();
 
-  const updatedProfile = await updateUser(user.id, {
+  const { data, error } = await computeAndStoreChart({
+    profile_id: user.id,
+    name: user.name,
     birth_place_id: place_id,
     birth_lat: lat,
     birth_lng: lng,
     birth_time: timestamp,
     birth_place: formatted_address,
+    is_primary: true,
   });
 
-  //const astro = calculateAstro({
-  //  timestamp: updatedProfile.birth_time,
-  //  lat: updatedProfile.birth_lat,
-  //  lng: updatedProfile.birth_lng,
-  //});
+  if (error) {
+    console.log("error");
+    //TODO: handle errors
+  }
+
+  console.dir(data);
+
   return redirect("/profile");
 };
 
