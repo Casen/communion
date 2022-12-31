@@ -16,7 +16,7 @@ import {
   type VedicChart,
 } from "./interface";
 
-export const computeChart = (input: ChartInput) => {
+export const computeChart = (input: ChartInput): VedicChart => {
   const { timestamp, lat, lng } = input;
   const timestr = timestamp.split("T")[1];
   const [hours, minutes] = timestr.split(":");
@@ -68,8 +68,8 @@ export const computeChart = (input: ChartInput) => {
     const signPosition = Math.floor(body.longitude / 30) + 1;
     const sign = getSignDetails(signPosition);
     const nak = getNakshatraDetails(Math.ceil((body.longitude * 27) / 360));
-    const signDeg = body.longitude - (signPosition - 1) * 30;
-    const { degrees, minutes } = convertToDM(signDeg);
+    const zodiacDegrees = body.longitude - (signPosition - 1) * 30;
+    const { degrees, minutes } = convertToDM(zodiacDegrees);
 
     if (body.name === "ascendant") {
       houses = setupHouses(sign.position);
@@ -79,6 +79,8 @@ export const computeChart = (input: ChartInput) => {
     return {
       degrees,
       minutes,
+      zodiacDegrees,
+      longitude: body.longitude,
       name: body.name,
       zodiac: sign,
       house: house?.position || 0,
@@ -113,9 +115,8 @@ export const computeChart = (input: ChartInput) => {
 
   //const ascSign = getSignDetails(Math.floor(data.ascendant / 30) + 1);
 
-  const chart: Partial<VedicChart> = {
-    ascendant: planets.slice(0, 1)[0],
-    planets: planets.slice(1),
+  const chart: VedicChart = {
+    planets,
     houses: houses.map((h) => {
       return { position: h.position, zodiac: getSignDetails(h.sign) };
     }),

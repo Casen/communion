@@ -44,6 +44,8 @@ export interface Nakshatra {
 export interface Planet {
   degrees: number;
   minutes: number;
+  zodiacDegrees: number;
+  longitude: number;
   name: string;
   zodiac: Zodiac;
   nakshatra: Nakshatra;
@@ -56,7 +58,6 @@ export interface House {
 }
 
 export interface VedicChart {
-  ascendant: Planet;
   planets: Planet[];
   houses: House[];
   earth: number;
