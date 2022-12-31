@@ -48,6 +48,7 @@ export async function computeAndStoreChart(dto: ComputeAndStoreChart) {
   });
 
   if (!chart || createChartError) {
+    console.log("createChart ERROR: ", createChartError);
     return { data: null, error: createChartError };
   }
 
@@ -70,6 +71,7 @@ export async function computeAndStoreChart(dto: ComputeAndStoreChart) {
   );
 
   if (!planets || !planets.length || createPlanetsError) {
+    console.log("createPlanets ERROR: ", createPlanetsError);
     return { data: null, error: createPlanetsError };
   }
 
@@ -86,6 +88,7 @@ export async function computeAndStoreChart(dto: ComputeAndStoreChart) {
   );
 
   if (!houses || !houses.length || createHousesError) {
+    console.log("createHouses ERROR: ", createHousesError);
     return { data: null, error: createHousesError };
   }
 
@@ -127,7 +130,7 @@ export async function getChartById(id: string) {
 export async function getPrimaryChart(profileId: string) {
   return supabase
     .from("charts")
-    .select()
+    .select("*, planets(*), houses(*)")
     .eq("profile_id", profileId)
     .eq("is_primary", true)
     .single();

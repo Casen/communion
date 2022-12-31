@@ -12,6 +12,7 @@ export async function loader({ request }: LoaderArgs) {
 
   const { data, error } = await getPrimaryChart(user.id);
 
+  console.log("error getting chart: ", error);
   if (!data || error) return null;
 
   return data;
