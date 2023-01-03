@@ -14,6 +14,7 @@ export const meta: MetaFunction = () => {
 
 interface ActionData {
   errors: {
+    name?: string;
     email?: string;
     password?: string;
   };
@@ -27,6 +28,7 @@ export async function loader({ request }: LoaderArgs) {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
+  const name = formData.get("email");
   const email = formData.get("email");
   const password = formData.get("password");
   const redirectTo = formData.get("redirectTo");
@@ -37,6 +39,10 @@ export const action: ActionFunction = async ({ request }) => {
       { errors: { email: "Email is invalid." } },
       { status: 400 }
     );
+  }
+
+  if (typeof name !== "string" || name.length > 1) {
+    return json({ errors: { password: "Name required." } }, { status: 400 });
   }
 
   // What if a user sends us a password through other means than our form?
@@ -65,7 +71,7 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  const user = await createUser(email, password);
+  const user = await createUser(name, email, password);
   if (!user || !user.id) {
     return json<ActionData>(
       { errors: { email: "Failed to create account" } },
@@ -87,6 +93,7 @@ export default function Join() {
 
   const actionData = useActionData() as ActionData;
   const emailRef = React.useRef<HTMLInputElement>(null);
+  const nameRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
@@ -97,12 +104,35 @@ export default function Join() {
     if (actionData?.errors?.password) {
       passwordRef?.current?.focus();
     }
+
+    if (actionData?.errors?.name) {
+      nameRef?.current?.focus();
+    }
   }, [actionData]);
 
   return (
     <div className="flex min-h-full flex-col justify-center rounded-lg bg-white py-8">
       <div className="mx-auto w-full max-w-md px-8">
         <Form className="space-y-6" method="post" noValidate>
+          <div>
+            <label className="text-sm font-medium" htmlFor="email">
+              <span className="block text-gray-700">Name</span>
+              {actionData?.errors?.name && (
+                <span className="block pt-1 text-red-700" id="name-error">
+                  {actionData?.errors?.name}
+                </span>
+              )}
+            </label>
+            <input
+              className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+              name="name"
+              id="name"
+              required
+              aria-invalid={actionData?.errors?.name ? true : undefined}
+              aria-describedby="name-error"
+              ref={nameRef}
+            />
+          </div>
           <div>
             <label className="text-sm font-medium" htmlFor="email">
               <span className="block text-gray-700">Email Address</span>

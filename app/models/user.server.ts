@@ -19,7 +19,11 @@ invariant(
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
 
-export async function createUser(email: string, password: string) {
+export async function createUser(
+  name: string,
+  email: string,
+  password: string
+) {
   const {
     data: { user },
     error,
@@ -31,9 +35,15 @@ export async function createUser(email: string, password: string) {
   console.log(error);
 
   // get the user profile after created
-  const profile = await getProfileByEmail(user?.email);
+  const existingProfile = await getProfileByEmail(user?.email);
 
-  return profile;
+  if (!existingProfile) {
+    console.log("ERROR: could not create user correctly");
+    return null;
+  }
+  const updatedProfile = await updateUser(existingProfile?.id, { email, name });
+
+  return updatedProfile;
 }
 
 export async function updateUser(

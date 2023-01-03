@@ -31,6 +31,8 @@ export async function computeAndStoreChart(dto: ComputeAndStoreChart) {
     timestamp: birth_time,
   });
 
+  console.log("creating chart: ", astro.chart.water);
+
   const { data: chart, error: createChartError } = await createChart({
     profile_id,
     is_primary,
@@ -110,7 +112,7 @@ export async function createChart(
 export async function createPlanets(
   dto: Database["public"]["Tables"]["planets"]["Insert"][]
 ) {
-  const { data, error } = await supabase.from("planets").insert(dto);
+  const { data, error } = await supabase.from("planets").insert(dto).select();
 
   return { data, error };
 }
@@ -118,7 +120,11 @@ export async function createPlanets(
 export async function createHouses(
   dto: Database["public"]["Tables"]["houses"]["Insert"][]
 ) {
-  const { data, error } = await supabase.from("houses").insert(dto);
+  console.log("creating houses: ", dto);
+  const { data, error } = await supabase.from("houses").insert(dto).select();
+
+  console.log("creating house data :", data);
+  console.log("creating house error: ", error);
 
   return { data, error };
 }

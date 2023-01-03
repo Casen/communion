@@ -15,6 +15,7 @@ export async function loader({ request }: LoaderArgs) {
   console.log("error getting chart: ", error);
   if (!data || error) return null;
 
+  console.log("got a chart: ", data);
   return data;
 }
 
