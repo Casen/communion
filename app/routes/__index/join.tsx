@@ -41,8 +41,8 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  if (typeof name !== "string" || name.length > 1) {
-    return json({ errors: { password: "Name required." } }, { status: 400 });
+  if (typeof name !== "string" || name.length < 1) {
+    return json({ errors: { name: "Name required." } }, { status: 400 });
   }
 
   // What if a user sends us a password through other means than our form?
@@ -118,7 +118,7 @@ export default function Join() {
       <div className="mx-auto w-full max-w-md px-8">
         <Form className="space-y-6" method="post" noValidate>
           <div>
-            <label className="text-sm font-medium" htmlFor="email">
+            <label className="text-sm font-medium" htmlFor="name">
               <span className="block text-gray-700">Name</span>
               {actionData?.errors?.name && (
                 <span className="block pt-1 text-red-700" id="name-error">
