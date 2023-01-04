@@ -84,7 +84,7 @@ export const action: ActionFunction = async ({ request }) => {
     userId: user.id,
     remember: false,
     redirectTo:
-      redirectTo && redirectTo.length
+      redirectTo && redirectTo.toString().length
         ? redirectTo.toString()
         : "/finish-profile",
   });
