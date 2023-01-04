@@ -57,7 +57,7 @@ export const computeChart = (input: ChartInput): VedicChart => {
 
   const trueNode = swisseph.swe_calc_ut(tjd, 11, iFlag) as SWECALC;
   const rahu = trueNode.longitude;
-  const ketu = rahu + 180;
+  const ketu = (rahu + 180) % 360;
 
   //Push rahu and ketu onto bodies array
   bodies.push({ name: "rahu", longitude: rahu });
