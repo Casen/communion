@@ -1,4 +1,4 @@
-import { calculateAstro } from "lib/astro";
+import { enneagram, northIndianChart } from "lib/astro";
 import { type Database } from "lib/database.types";
 import { supabase } from "./user.server";
 
@@ -9,7 +9,8 @@ interface ComputeAndStoreChart {
   birth_lng: number;
   birth_place_id: string;
   birth_place: string;
-  birth_time: string;
+  birth_time_utc: string;
+  birth_time_local: string;
   is_primary: boolean;
 }
 
@@ -19,19 +20,18 @@ export async function computeAndStoreChart(dto: ComputeAndStoreChart) {
     profile_id,
     birth_lat,
     birth_lng,
-    birth_time,
+    birth_time_utc,
+    birth_time_local,
     birth_place,
     birth_place_id,
     is_primary,
   } = dto;
 
-  const astro = calculateAstro({
+  const astro = northIndianChart({
     lat: birth_lat,
     lng: birth_lng,
-    timestamp: birth_time,
+    timestamp: birth_time_utc,
   });
-
-  console.log("creating chart: ", astro.chart.water);
 
   const { data: chart, error: createChartError } = await createChart({
     profile_id,
@@ -41,12 +41,12 @@ export async function computeAndStoreChart(dto: ComputeAndStoreChart) {
     birth_lng,
     birth_place,
     birth_place_id,
-    birth_time,
+    birth_time: birth_time_utc,
     earth: astro.chart.earth,
     water: astro.chart.water,
     fire: astro.chart.fire,
     air: astro.chart.air,
-    enneagram: astro.enneagram,
+    enneagram: enneagram(birth_time_local),
   });
 
   if (!chart || createChartError) {

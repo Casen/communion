@@ -29,11 +29,11 @@ export const action: ActionFunction = async ({ request }) => {
     return { error: "Invalid City" };
   }
 
-  const birthDateTime = dayjs(form.get("datetime") + ":00.000Z").subtract(
+  const birthDateLocalTime = dayjs(form.get("datetime") + ":00.000Z");
+  const birthDateUTCTime = dayjs(form.get("datetime") + ":00.000Z").subtract(
     city.utc_offset,
     "minutes"
   );
-  const timestamp = birthDateTime.toISOString();
 
   const { data, error } = await computeAndStoreChart({
     profile_id: user.id,
@@ -41,7 +41,8 @@ export const action: ActionFunction = async ({ request }) => {
     birth_place_id: place_id,
     birth_lat: lat,
     birth_lng: lng,
-    birth_time: timestamp,
+    birth_time_utc: birthDateUTCTime.toISOString(),
+    birth_time_local: birthDateLocalTime.toISOString(),
     birth_place: formatted_address,
     is_primary: true,
   });

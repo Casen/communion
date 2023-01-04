@@ -2,12 +2,14 @@ import { computeChart } from "./chart.server";
 import { computeEnneagram } from "./enneagram";
 import { type ChartInput } from "./interface";
 
-export const calculateAstro = (input: ChartInput) => {
+export const northIndianChart = (input: ChartInput) => {
   const vedicBirthChart = computeChart(input);
-  const enneagram = computeEnneagram(input.timestamp);
 
   return {
     chart: vedicBirthChart,
-    enneagram,
   };
+};
+
+export const enneagram = (timestamp: string) => {
+  return computeEnneagram(timestamp);
 };
