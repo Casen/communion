@@ -4,8 +4,8 @@
 
   // Code action kinds to be run on save.
   "editor.codeActionsOnSave": {
-    "source.sortImports": true,
-    "source.fixAll.eslint": true
+    "source.sortImports": "explicit",
+    "source.fixAll.eslint": "explicit"
   },
 
   // Defines a default formatter which takes precedence over all other formatter settings. Must be the identifier of an extension contributing a formatter.

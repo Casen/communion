@@ -134,10 +134,12 @@ export async function getChartById(id: string) {
 }
 
 export async function getPrimaryChart(profileId: string) {
-  return supabase
+  const { data, error } = await supabase
     .from("charts")
     .select("*, planets(*), houses(*)")
     .eq("profile_id", profileId)
     .eq("is_primary", true)
     .single();
+
+  return { data, error };
 }
