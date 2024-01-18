@@ -1,4 +1,4 @@
-const googkey = "";
+const googkey = process.env.GOOG_KEY;
 
 export const placeDetails = async (placeId: string) => {
   const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=${googkey}`;
